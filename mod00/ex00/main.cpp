@@ -1,4 +1,3 @@
-#include <cctype>
 #include <iostream>
 
 char *str_toupper(char *str) {
