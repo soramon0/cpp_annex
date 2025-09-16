@@ -3,7 +3,7 @@
 
 char *str_toupper(char *str) {
   for (int i = 0; str[i]; ++i) {
-    str[i] = std::toupper(static_cast<unsigned char>(str[i]));
+    str[i] = std::toupper(str[i]);
   }
   return str;
 }
