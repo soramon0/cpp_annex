@@ -1,17 +1,21 @@
 #include "Contact.hpp"
 #include <stddef.h>
 
-#define MAX_CONTACT 8
+#define MAX_CONTACT 4
+#define COL_WIDTH 10
 
 class PhoneBook {
-  size_t _contacts_len;
+  size_t _contactLen;
   Contact _contacts[MAX_CONTACT];
 
 public:
-  PhoneBook() : _contacts_len(0) {}
+  PhoneBook() : _contactLen(0) {}
 
   void usage() const;
-  void accept_command();
-  bool contact_add();
-  void contact_search();
+  void acceptCommand();
+
+private:
+  bool contactAdd();
+  void contactSearch() const;
+  void displayTablePreview() const;
 };

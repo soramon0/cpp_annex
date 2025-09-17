@@ -1,11 +1,12 @@
 #include "PhoneBook.hpp"
+#include <iomanip>
 #include <iostream>
 
 void PhoneBook::usage() const {
-  std::cout << "Enter phone book command: (ADD, SEARCH, EXIT)" << std::endl;
+  std::cout << "Enter a command: (ADD, SEARCH, EXIT)" << std::endl;
 }
 
-void PhoneBook::accept_command() {
+void PhoneBook::acceptCommand() {
   std::string command;
 
   while (true) {
@@ -14,16 +15,16 @@ void PhoneBook::accept_command() {
     if (std::cin.fail() || command == "EXIT") {
       break;
     } else if (command == "ADD") {
-      if (!contact_add())
+      if (!contactAdd())
         break;
     } else if (command == "SEARCH") {
-      contact_search();
+      contactSearch();
     }
     usage();
   }
 }
 
-bool ask_user(std::string label, std::string &field) {
+static bool askUser(std::string label, std::string &field) {
   std::cout << "Enter " << label << ": ";
 
   field = "";
@@ -35,7 +36,7 @@ bool ask_user(std::string label, std::string &field) {
       return false;
     }
     if (field == "") {
-      std::cerr << label << " cannot be empty" << std::endl;
+      std::cout << label << " cannot be empty" << std::endl;
       std::cin.clear();
     }
   }
@@ -43,38 +44,86 @@ bool ask_user(std::string label, std::string &field) {
   return true;
 }
 
-bool PhoneBook::contact_add() {
-  size_t index = _contacts_len;
-  if (_contacts_len == MAX_CONTACT) {
+bool PhoneBook::contactAdd() {
+  size_t index = _contactLen;
+  if (index == MAX_CONTACT)
     index = 0;
-  }
   Contact &contact = _contacts[index];
-  contact.index = index + 1;
 
-  if (!ask_user("first name", contact.fname)) {
+  if (!askUser("first name", contact.fname)) {
     return false;
   }
-  if (!ask_user("last name", contact.lname)) {
+  if (!askUser("last name", contact.lname)) {
     return false;
   }
-  if (!ask_user("nickname", contact.nickname)) {
+  if (!askUser("nickname", contact.nickname)) {
     return false;
   }
-  if (!ask_user("phone number", contact.phone)) {
+  if (!askUser("phone number", contact.phone)) {
     return false;
   }
-  if (!ask_user("darkest secret", contact.darkest_secret)) {
+  if (!askUser("darkest secret", contact.darkestSecret)) {
     return false;
   }
 
-  if (_contacts_len < MAX_CONTACT) {
-    _contacts_len++;
+  if (_contactLen < MAX_CONTACT) {
+    _contactLen++;
   }
   return true;
 }
 
-void PhoneBook::contact_search() {
-  for (size_t i = 0; i < _contacts_len; ++i) {
-    _contacts[i].print();
+
+void PhoneBook::contactSearch() const {
+  if (_contactLen == 0) {
+    std::cout << "No contacts to display." << std::endl;
+    return;
+  }
+
+  displayTablePreview();
+
+  int index;
+  std::cout << "Enter the index of the contact to display: ";
+  std::cin >> index;
+  if (std::cin.fail()) {
+    std::cin.clear();
+    std::cout << "Invalid input. Please enter a valid number." << std::endl;
+    return;
+  }
+
+  if (index < 0 || (size_t)index >= _contactLen) {
+    std::cout << "Invalid index. Please enter a number between 0 and "
+              << _contactLen - 1 << "." << std::endl;
+    return;
+  }
+  _contacts[index].print();
+}
+
+static void display_field(const std::string &field) {
+  std::string display_str = field;
+
+  if (field.length() > COL_WIDTH) {
+    display_str = field.substr(0, COL_WIDTH - 1) + ".";
+  }
+
+  std::cout << std::right << std::setw(COL_WIDTH) << display_str;
+}
+
+void PhoneBook::displayTablePreview() const {
+  std::cout << std::right << "|" << std::setw(COL_WIDTH) << "Index"
+            << "|" << std::setw(COL_WIDTH) << "First Name"
+            << "|" << std::setw(COL_WIDTH) << "Last Name"
+            << "|" << std::setw(COL_WIDTH) << "Nickname"
+            << "|" << std::endl;
+
+  for (size_t i = 0; i < _contactLen; ++i) {
+    std::cout << std::right << "|" << std::setw(COL_WIDTH) << i;
+    std::cout << "|";
+    display_field(_contacts[i].fname);
+    std::cout << "|";
+    display_field(_contacts[i].lname);
+    std::cout << "|";
+    display_field(_contacts[i].nickname);
+    std::cout << "|" << std::endl;
   }
 }
+

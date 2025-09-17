@@ -1,4 +1,3 @@
-#include <stddef.h>
 #include <string>
 
 class Contact {
@@ -7,13 +6,9 @@ public:
   std::string lname;
   std::string nickname;
   std::string phone;
-  std::string darkest_secret;
-  size_t index;
+  std::string darkestSecret;
 
-  Contact()
-      : fname(), lname(), nickname(), phone(), darkest_secret(), index(0) {}
-  Contact(size_t i)
-      : fname(), lname(), nickname(), phone(), darkest_secret(), index(i) {}
+  Contact() : fname(), lname(), nickname(), phone(), darkestSecret() {}
 
   void print() const;
 };

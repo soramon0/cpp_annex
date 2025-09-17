@@ -2,8 +2,7 @@
 
 int main() {
   PhoneBook phoneBook;
-
   phoneBook.usage();
-  phoneBook.accept_command();
+  phoneBook.acceptCommand();
   return 0;
 }
