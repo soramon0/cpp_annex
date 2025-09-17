@@ -1,12 +1,19 @@
-#include <iostream>
+#include <stddef.h>
+#include <string>
 
 class Contact {
-  std::string _fname;
-  std::string _lname;
-  std::string _nickname;
-  std::string _phone;
-  std::string _darkest_secret;
-
 public:
-  Contact(): _fname(), _lname(), _nickname(), _phone(), _darkest_secret() {}
+  std::string fname;
+  std::string lname;
+  std::string nickname;
+  std::string phone;
+  std::string darkest_secret;
+  size_t index;
+
+  Contact()
+      : fname(), lname(), nickname(), phone(), darkest_secret(), index(0) {}
+  Contact(size_t i)
+      : fname(), lname(), nickname(), phone(), darkest_secret(), index(i) {}
+
+  void print() const;
 };

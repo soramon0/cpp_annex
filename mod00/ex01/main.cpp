@@ -1,9 +1,9 @@
 #include "PhoneBook.hpp"
-#include <iostream>
 
 int main() {
   PhoneBook phoneBook;
 
-  std::cout << phoneBook.contacts_saved() << std::endl;
+  phoneBook.usage();
+  phoneBook.accept_command();
   return 0;
 }
