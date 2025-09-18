@@ -10,17 +10,18 @@ void PhoneBook::acceptCommand() {
   std::string command;
 
   while (true) {
+    usage();
     std::cin >> command;
 
-    if (std::cin.fail() || command == "EXIT") {
+    if (std::cin.fail() || std::cin.eof() || command == "EXIT") {
       break;
     } else if (command == "ADD") {
       if (!contactAdd())
         break;
     } else if (command == "SEARCH") {
-      contactSearch();
+      if (!contactSearch())
+        break;
     }
-    usage();
   }
 }
 
@@ -30,7 +31,7 @@ static bool askUser(std::string label, std::string &field) {
   field = "";
   while (field == "") {
     std::cin >> field;
-    if (std::cin.fail()) {
+    if (std::cin.fail() || std::cin.eof()) {
       std::cin.clear();
       std::cout << std::endl;
       return false;
@@ -72,11 +73,10 @@ bool PhoneBook::contactAdd() {
   return true;
 }
 
-
-void PhoneBook::contactSearch() const {
+bool PhoneBook::contactSearch() const {
   if (_contactLen == 0) {
     std::cout << "No contacts to display." << std::endl;
-    return;
+    return true;
   }
 
   displayTablePreview();
@@ -85,17 +85,23 @@ void PhoneBook::contactSearch() const {
   std::cout << "Enter the index of the contact to display: ";
   std::cin >> index;
   if (std::cin.fail()) {
+    if (std::cin.eof()) {
+      std::cin.clear();
+      std::cout << std::endl;
+      return false;
+    }
     std::cin.clear();
     std::cout << "Invalid input. Please enter a valid number." << std::endl;
-    return;
+    return false;
   }
 
   if (index < 0 || (size_t)index >= _contactLen) {
     std::cout << "Invalid index. Please enter a number between 0 and "
               << _contactLen - 1 << "." << std::endl;
-    return;
+    return true;
   }
   _contacts[index].print();
+  return true;
 }
 
 static void display_field(const std::string &field) {
@@ -126,4 +132,3 @@ void PhoneBook::displayTablePreview() const {
     std::cout << "|" << std::endl;
   }
 }
-

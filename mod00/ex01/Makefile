@@ -1,5 +1,5 @@
 CXX = c++
-CXXFLAGS = -Wall -Wextra -Werror -std=c++98 -fsanitize=address,undefined
+CXXFLAGS = -Wall -Wextra -Werror -std=c++98 #-fsanitize=address,undefined
 TARGET = phonebook
 SRC = $(wildcard *.cpp)
 OBJ = $(SRC:.cpp=.o)

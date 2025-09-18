@@ -1,8 +1,6 @@
 #include "PhoneBook.hpp"
 
 int main() {
-  PhoneBook phoneBook;
-  phoneBook.usage();
-  phoneBook.acceptCommand();
+  PhoneBook().acceptCommand();
   return 0;
 }

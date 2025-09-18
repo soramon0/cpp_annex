@@ -16,6 +16,6 @@ public:
 
 private:
   bool contactAdd();
-  void contactSearch() const;
+  bool contactSearch() const;
   void displayTablePreview() const;
 };
