@@ -1,6 +1,8 @@
 #include "PhoneBook.hpp"
 #include <iomanip>
 #include <iostream>
+#include <limits>
+#include <string>
 
 void PhoneBook::usage() const {
   std::cout << "Enter a command: (ADD, SEARCH, EXIT)" << std::endl;
@@ -11,16 +13,19 @@ void PhoneBook::acceptCommand() {
 
   while (true) {
     usage();
-    std::cin >> command;
 
-    if (std::cin.fail() || std::cin.eof() || command == "EXIT") {
-      break;
-    } else if (command == "ADD") {
+    std::cin >> std::ws;
+    std::getline(std::cin, command);
+
+    if (command == "EXIT" || std::cin.fail() || std::cin.eof())
+      return;
+
+    if (command == "ADD") {
       if (!contactAdd())
-        break;
+        return;
     } else if (command == "SEARCH") {
       if (!contactSearch())
-        break;
+        return;
     }
   }
 }
@@ -33,9 +38,11 @@ static bool collectContactInfo(Contact &contact) {
 
   for (int i = 0; i < 5; ++i) {
     std::cout << "Enter " << labels[i] << ": ";
-    std::cin >> *fields[i];
 
-    if (std::cin.fail() || std::cin.eof()) {
+    std::cin >> std::ws;
+    std::getline(std::cin, *fields[i]);
+
+    if (std::cin.eof()) {
       std::cin.clear();
       std::cout << std::endl;
       return false;
@@ -43,7 +50,6 @@ static bool collectContactInfo(Contact &contact) {
 
     if (fields[i]->empty()) {
       std::cout << labels[i] << " cannot be empty" << std::endl;
-      std::cin.clear();
       return false;
     }
   }
