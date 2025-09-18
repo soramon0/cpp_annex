@@ -25,20 +25,26 @@ void PhoneBook::acceptCommand() {
   }
 }
 
-static bool askUser(std::string label, std::string &field) {
-  std::cout << "Enter " << label << ": ";
+static bool collectContactInfo(Contact &contact) {
+  const char *labels[5] = {"first name", "last name", "nickname",
+                           "phone number", "darkest secret"};
+  std::string *fields[5] = {&contact.fname, &contact.lname, &contact.nickname,
+                            &contact.phone, &contact.darkestSecret};
 
-  field = "";
-  while (field == "") {
-    std::cin >> field;
+  for (int i = 0; i < 5; ++i) {
+    std::cout << "Enter " << labels[i] << ": ";
+    std::cin >> *fields[i];
+
     if (std::cin.fail() || std::cin.eof()) {
       std::cin.clear();
       std::cout << std::endl;
       return false;
     }
-    if (field == "") {
-      std::cout << label << " cannot be empty" << std::endl;
+
+    if (fields[i]->empty()) {
+      std::cout << labels[i] << " cannot be empty" << std::endl;
       std::cin.clear();
+      return false;
     }
   }
 
@@ -51,19 +57,7 @@ bool PhoneBook::contactAdd() {
     index = 0;
   Contact &contact = _contacts[index];
 
-  if (!askUser("first name", contact.fname)) {
-    return false;
-  }
-  if (!askUser("last name", contact.lname)) {
-    return false;
-  }
-  if (!askUser("nickname", contact.nickname)) {
-    return false;
-  }
-  if (!askUser("phone number", contact.phone)) {
-    return false;
-  }
-  if (!askUser("darkest secret", contact.darkestSecret)) {
+  if (!collectContactInfo(contact)) {
     return false;
   }
 
