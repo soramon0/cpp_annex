@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Contact.hpp"
 #include <stddef.h>
 
@@ -10,12 +12,11 @@ class PhoneBook {
 
 public:
   PhoneBook() : _contactLen(0) {}
-
-  void usage() const;
   void acceptCommand();
 
 private:
   bool contactAdd();
   bool contactSearch() const;
   void displayTablePreview() const;
+  void usage() const;
 };
