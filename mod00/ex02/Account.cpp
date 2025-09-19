@@ -1,6 +1,6 @@
 #include "Account.hpp"
 #include <iostream>
-#include <iomanip>
+#include <ctime>
 
 int	Account::_nbAccounts = 0;
 
@@ -31,40 +31,42 @@ Account::~Account()
 	Account::_nbAccounts--;
 }
 
-int	Account::getNbAccounts(void)
+int	Account::getNbAccounts()
 {
 	return (Account::_nbAccounts);
 }
 
-int	Account::getTotalAmount(void)
+int	Account::getTotalAmount()
 {
 	return (Account::_totalAmount);
 }
 
-int	Account::getNbDeposits(void)
+int	Account::getNbDeposits()
 {
 	return (Account::_totalNbDeposits);
 }
 
-int	Account::getNbWithdrawals(void)
+int	Account::getNbWithdrawals()
 {
 	return (Account::_totalNbWithdrawals);
 }
 
-int	Account::checkAmount(void) const
+int	Account::checkAmount() const
 {
 	return (this->_amount);
 }
 
-void	Account::_displayTimestamp(void)
+void Account::_displayTimestamp()
 {
-	time_t	now;
+    std::time_t now = std::time(NULL);
+    std::tm* local_time = std::localtime(&now);
 
-	now = time(NULL);
-	std::cout << std::put_time(localtime(&now), "[%Y%m%d_%H%M%S] ");
+    char buffer[20];
+    std::strftime(buffer, sizeof(buffer), "[%Y%m%d_%H%M%S] ", local_time);
+    std::cout << buffer;
 }
 
-void	Account::displayAccountsInfos(void)
+void	Account::displayAccountsInfos()
 {
 	Account::_displayTimestamp();
 	std::cout << "accounts:" << Account::getNbAccounts() << \
@@ -73,7 +75,7 @@ void	Account::displayAccountsInfos(void)
 		";withdrawals:" << Account::getNbWithdrawals() << std::endl;
 }
 
-void	Account::displayStatus(void) const
+void	Account::displayStatus() const
 {
 	Account::_displayTimestamp();
 	std::cout << "index:" << this->_accountIndex << ";amount:" << this->checkAmount();
