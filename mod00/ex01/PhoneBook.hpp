@@ -11,7 +11,7 @@ class PhoneBook {
   Contact _contacts[MAX_CONTACT];
 
 public:
-  PhoneBook() : _contactLen(0) {}
+  PhoneBook();
   void acceptCommand();
 
 private:

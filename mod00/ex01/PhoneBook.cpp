@@ -7,6 +7,8 @@ void PhoneBook::usage() const {
   std::cout << "Enter a command: (ADD, SEARCH, EXIT)" << std::endl;
 }
 
+PhoneBook::PhoneBook() : _contactLen(0) {}
+
 void PhoneBook::acceptCommand() {
   std::string command;
 
@@ -51,13 +53,22 @@ static bool collectContactInfo(Contact &contact) {
       return false;
     }
 
-    // Use setters to assign values
     switch (i) {
-      case 0: contact.setFname(input); break;
-      case 1: contact.setLname(input); break;
-      case 2: contact.setNickname(input); break;
-      case 3: contact.setPhone(input); break;
-      case 4: contact.setDarkestSecret(input); break;
+    case 0:
+      contact.setFname(input);
+      break;
+    case 1:
+      contact.setLname(input);
+      break;
+    case 2:
+      contact.setNickname(input);
+      break;
+    case 3:
+      contact.setPhone(input);
+      break;
+    case 4:
+      contact.setDarkestSecret(input);
+      break;
     }
   }
 
