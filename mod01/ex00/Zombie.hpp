@@ -2,13 +2,13 @@
 
 #include <string>
 
-class Zoombie {
+class Zombie {
 private:
   std::string _name;
 
 public:
-  Zoombie(std::string name);
-  ~Zoombie();
+  Zombie(std::string name);
+  ~Zombie();
 
   void announce(void) const;
 };

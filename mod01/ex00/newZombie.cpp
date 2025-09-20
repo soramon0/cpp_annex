@@ -1,3 +1,4 @@
-#include "Zoombie.hpp"
+#include "Zombie.hpp"
+#include <string>
 
-Zoombie *newZombie(std::string name) { return new Zoombie(name); }
+Zombie *newZombie(std::string name) { return new Zombie(name); }

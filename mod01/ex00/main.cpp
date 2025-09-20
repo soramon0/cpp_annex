@@ -1,14 +1,14 @@
-#include "Zoombie.hpp"
+#include "Zombie.hpp"
 
-Zoombie *newZombie(std::string name);
+Zombie *newZombie(std::string name);
 void randomChump(std::string name);
 
 int main() {
-  Zoombie("Bob").announce();
-  Zoombie helena = Zoombie("Helena");
+  Zombie("Bob").announce();
+  Zombie helena = Zombie("Helena");
   helena.announce();
 
-  Zoombie *hippie = newZombie("Hippy");
+  Zombie *hippie = newZombie("Hippy");
   hippie->announce();
   delete hippie;
 
