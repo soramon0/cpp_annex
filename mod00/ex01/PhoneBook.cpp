@@ -32,14 +32,13 @@ void PhoneBook::acceptCommand() {
 static bool collectContactInfo(Contact &contact) {
   const char *labels[5] = {"first name", "last name", "nickname",
                            "phone number", "darkest secret"};
-  std::string *fields[5] = {&contact.fname, &contact.lname, &contact.nickname,
-                            &contact.phone, &contact.darkestSecret};
+  std::string input;
 
   for (int i = 0; i < 5; ++i) {
     std::cout << "Enter " << labels[i] << ": ";
 
     std::cin >> std::ws;
-    std::getline(std::cin, *fields[i]);
+    std::getline(std::cin, input);
 
     if (std::cin.eof()) {
       std::cin.clear();
@@ -47,9 +46,18 @@ static bool collectContactInfo(Contact &contact) {
       return false;
     }
 
-    if (fields[i]->empty()) {
+    if (input.empty()) {
       std::cout << labels[i] << " cannot be empty" << std::endl;
       return false;
+    }
+
+    // Use setters to assign values
+    switch (i) {
+      case 0: contact.setFname(input); break;
+      case 1: contact.setLname(input); break;
+      case 2: contact.setNickname(input); break;
+      case 3: contact.setPhone(input); break;
+      case 4: contact.setDarkestSecret(input); break;
     }
   }
 
@@ -123,11 +131,11 @@ void PhoneBook::displayTablePreview() const {
   for (size_t i = 0; i < _contactLen; ++i) {
     std::cout << std::right << "|" << std::setw(COL_WIDTH) << i;
     std::cout << "|";
-    display_field(_contacts[i].fname);
+    display_field(_contacts[i].getFname());
     std::cout << "|";
-    display_field(_contacts[i].lname);
+    display_field(_contacts[i].getLname());
     std::cout << "|";
-    display_field(_contacts[i].nickname);
+    display_field(_contacts[i].getNickname());
     std::cout << "|" << std::endl;
   }
 }
