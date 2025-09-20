@@ -1,8 +1,7 @@
 #include "Zoombie.hpp"
 
-Zoombie *newZombie(std::string name) { return new Zoombie(name); }
-
-void randomChump(std::string name) { Zoombie(name).announce(); }
+Zoombie *newZombie(std::string name);
+void randomChump(std::string name);
 
 int main() {
   Zoombie("Bob").announce();
