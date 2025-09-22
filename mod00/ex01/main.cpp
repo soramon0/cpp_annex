@@ -1,6 +1,3 @@
 #include "PhoneBook.hpp"
 
-int main() {
-  PhoneBook().acceptCommand();
-  return 0;
-}
+int main() { return PhoneBook().acceptCommand(); }

@@ -9,7 +9,7 @@ void PhoneBook::usage() const {
 
 PhoneBook::PhoneBook() : _contactLen(0) {}
 
-void PhoneBook::acceptCommand() {
+int PhoneBook::acceptCommand() {
   std::string command;
 
   while (true) {
@@ -18,17 +18,19 @@ void PhoneBook::acceptCommand() {
     std::cin >> std::ws;
     std::getline(std::cin, command);
 
-    if (command == "EXIT" || std::cin.fail() || std::cin.eof())
-      return;
-
+    if (std::cin.fail())
+      return -1;
+    if (command == "EXIT" || std::cin.eof())
+      return 0;
     if (command == "ADD") {
       if (!contactAdd())
-        return;
+        return -1;
     } else if (command == "SEARCH") {
       if (!contactSearch())
-        return;
+        return -1;
     }
   }
+  return 0;
 }
 
 static bool collectContactInfo(Contact &contact) {

@@ -12,7 +12,7 @@ class PhoneBook {
 
 public:
   PhoneBook();
-  void acceptCommand();
+  int acceptCommand();
 
 private:
   bool contactAdd();
