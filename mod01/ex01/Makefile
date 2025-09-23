@@ -1,6 +1,6 @@
 CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98 #-fsanitize=address,undefined
-TARGET = zoombie
+TARGET = zoombieHorde
 SRC = $(wildcard *.cpp)
 OBJ = $(SRC:.cpp=.o)
 
