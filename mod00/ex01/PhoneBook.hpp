@@ -3,7 +3,7 @@
 #include "Contact.hpp"
 #include <stddef.h>
 
-#define MAX_CONTACT 4
+#define MAX_CONTACT 8
 #define COL_WIDTH 10
 
 class PhoneBook {
