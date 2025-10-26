@@ -2,7 +2,16 @@
 
 #include <string>
 
+struct Logger {
+  enum Priority { DEBUG, INFO, WARNING, ERROR, UNKNOWN };
+};
+
 class Harl {
+public:
+  Harl();
+  void complain(std::string level);
+  Logger::Priority getPriority(const std::string lvl) const;
+
 private:
   void debug(void);
   void info(void);
@@ -12,8 +21,4 @@ private:
 
   complaintFunction complaintFunctions[4];
   std::string levels[4];
-
-public:
-  Harl();
-  void complain(std::string level);
 };
