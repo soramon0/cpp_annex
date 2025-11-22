@@ -2,7 +2,8 @@
 
 class Fixed {
 private:
-  int value;
+  int _value;
+  static const int _fractions;
 
 public:
   Fixed();
