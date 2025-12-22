@@ -10,7 +10,9 @@ ClapTrap::ClapTrap(std::string n)
   std::cout << "ClapTrap Default constructor for name called" << std::endl;
 }
 
-ClapTrap::~ClapTrap() { std::cout << "ClapTrap Destructor called" << std::endl; }
+ClapTrap::~ClapTrap() {
+  std::cout << "ClapTrap Destructor called" << std::endl;
+}
 
 ClapTrap::ClapTrap(const ClapTrap &other) {
   std::cout << "ClapTrap Copy constructor called" << std::endl;
@@ -29,7 +31,7 @@ ClapTrap &ClapTrap::operator=(const ClapTrap &other) {
 }
 
 std::string ClapTrap::toString() const {
-  std::string prefix = "ClapTrap " + name + "(HP: ";
+  std::string prefix = name + "(HP: ";
   std::ostringstream oss;
 
   oss << prefix << hitPoints << ", EP: " << energyPoints

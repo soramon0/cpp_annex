@@ -1,7 +1,6 @@
 #pragma once
 #include "./ClapTrap.hpp"
 #include <string>
-#include <sstream>
 
 class FragTrap : public ClapTrap {
 public:
@@ -11,9 +10,6 @@ public:
 
   void attack(const std::string &target);
   void highFivesGuys(void);
-
-  std::string toString() const;
 };
 
 std::ostream &operator<<(std::ostream &os, const FragTrap &obj);
-

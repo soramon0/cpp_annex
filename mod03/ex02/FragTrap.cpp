@@ -15,7 +15,9 @@ FragTrap::FragTrap(std::string n) : ClapTrap(n) {
   this->hitPoints = 100;
 };
 
-FragTrap::~FragTrap() { std::cout << "FragTrap Destructor called" << std::endl; }
+FragTrap::~FragTrap() {
+  std::cout << "FragTrap Destructor called" << std::endl;
+}
 
 void FragTrap::attack(const std::string &target) {
   if (hitPoints <= 0) {
@@ -43,13 +45,3 @@ void FragTrap::highFivesGuys(void) {
 std::ostream &operator<<(std::ostream &os, const FragTrap &obj) {
   return os << obj.toString();
 }
-
-std::string FragTrap::toString() const {
-  std::string prefix = "FragTrap " + name + "(HP: ";
-  std::ostringstream oss;
-
-  oss << prefix << hitPoints << ", EP: " << energyPoints
-      << ", AD: " << attackDamage << ")";
-  return oss.str();
-}
-
