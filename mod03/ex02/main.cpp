@@ -1,4 +1,4 @@
-#include "ScavTrap.hpp"
+#include "FragTrap.hpp"
 #include <iostream>
 
 int main() {
@@ -6,14 +6,14 @@ int main() {
   std::cout << clappy << std::endl;
   clappy.attack("Hero");
   
-  ScavTrap scav("Roboto");
-  std::cout << scav << std::endl;
-  scav.attack("Enemy");
-  scav.guardGate();
-  std::cout << scav << std::endl;
+  FragTrap frag("FragBot");
+  std::cout << frag << std::endl;
+  frag.attack("Target");
+  frag.highFivesGuys();
+  std::cout << frag << std::endl;
   
   {
-    ScavTrap test("TestBot");
+    FragTrap test("TestFrag");
   }
   
   return 0;
