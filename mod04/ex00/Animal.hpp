@@ -4,7 +4,6 @@
 class Animal {
 protected:
   std::string type;
-  std::string sound;
 
 public:
   Animal();

@@ -4,7 +4,6 @@
 class WrongAnimal {
 protected:
   std::string type;
-  std::string sound;
 
 public:
   WrongAnimal();

@@ -1,13 +1,13 @@
 #include "Animal.hpp"
 #include <iostream>
 
-Animal::Animal() : type("Animal"), sound("brrr") {
+Animal::Animal() : type("Animal") {
   std::cout << "Animal default constructor called" << std::endl;
 }
 
 Animal::~Animal() { std::cout << "Animal deconstructor called" << std::endl; }
 
-Animal::Animal(const Animal &other) : type(other.type), sound(other.sound) {
+Animal::Animal(const Animal &other) : type(other.type) {
   std::cout << "Animal copy constructor called" << std::endl;
 }
 
@@ -15,13 +15,10 @@ Animal &Animal::operator=(const Animal &other) {
   std::cout << "Animal copy assignment operator called" << std::endl;
   if (this != &other) {
     this->type = other.type;
-    this->sound = other.sound;
   }
   return *this;
 }
 
 std::string Animal::getType() const { return this->type; }
 
-void Animal::makeSound() const {
-  std::cout << type << " goes " << sound << std::endl;
-}
+void Animal::makeSound() const { std::cout << "Brrr" << std::endl; }

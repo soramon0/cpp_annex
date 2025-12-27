@@ -3,7 +3,6 @@
 
 Dog::Dog() : Animal() {
   this->type = "Dog";
-  this->sound = "woof";
   std::cout << "Dog default constructor called" << std::endl;
 }
 
@@ -21,3 +20,5 @@ Dog &Dog::operator=(const Dog &other) {
   }
   return *this;
 }
+
+void Dog::makeSound() const { std::cout << "Woof" << std::endl; }
