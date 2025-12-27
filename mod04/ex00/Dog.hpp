@@ -9,4 +9,3 @@ public:
   Dog(const Dog &other);
   Dog &operator=(const Dog &other);
 };
-

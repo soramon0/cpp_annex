@@ -1,6 +1,8 @@
 #include "Animal.hpp"
 #include "Cat.hpp"
 #include "Dog.hpp"
+#include "WrongAnimal.hpp"
+#include "WrongCat.hpp"
 #include <iostream>
 
 int main() {
@@ -23,7 +25,7 @@ int main() {
   }
   std::cout << "-------" << std::endl;
   {
-    std::cout << "stack test" << std::endl;
+    std::cout << "Stack test" << std::endl;
     const Animal meta = Animal();
     const Animal j = Dog();
     const Animal i = Cat();
@@ -37,7 +39,7 @@ int main() {
   }
   std::cout << "-------" << std::endl;
   {
-    std::cout << "stack ref test" << std::endl;
+    std::cout << "Stack ref test" << std::endl;
     const Animal &meta = Animal();
     const Animal &j = Dog();
     const Animal &i = Cat();
@@ -48,6 +50,20 @@ int main() {
     j.makeSound();
     i.makeSound();
     meta.makeSound();
+  }
+  std::cout << "-------" << std::endl;
+  {
+    std::cout << "Wrong animal test" << std::endl;
+    const WrongAnimal *meta = new WrongAnimal();
+    const WrongAnimal *i = new WrongCat();
+
+    std::cout << meta->getType() << " " << std::endl;
+    std::cout << i->getType() << " " << std::endl;
+    i->makeSound();
+    meta->makeSound();
+
+    delete i;
+    delete meta;
   }
   return 0;
 }
