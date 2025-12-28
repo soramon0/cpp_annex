@@ -1,8 +1,8 @@
 #include "MateriaSource.hpp"
-#include <iostream>
+#include "Debug.hpp"
 
 MateriaSource::MateriaSource() : IMateriaSource() {
-  std::cout << "MateriaSource default constructor called" << std::endl;
+  DEBUG_PRINT("MateriaSource default constructor called" << std::endl);
 
   for (int i = 0; i < INVENTORY_SIZE; i++) {
     this->inventory[i] = NULL;
@@ -10,7 +10,7 @@ MateriaSource::MateriaSource() : IMateriaSource() {
 }
 
 MateriaSource::MateriaSource(MateriaSource const &other) : IMateriaSource() {
-  std::cout << "MateriaSource default copy constructor called" << std::endl;
+  DEBUG_PRINT("MateriaSource default copy constructor called" << std::endl);
 
   for (int i = 0; i < INVENTORY_SIZE; i++) {
     this->inventory[i] = NULL;
@@ -22,7 +22,7 @@ MateriaSource::MateriaSource(MateriaSource const &other) : IMateriaSource() {
 }
 
 MateriaSource::~MateriaSource() {
-  std::cout << "MateriaSource default deconstructor called" << std::endl;
+  DEBUG_PRINT("MateriaSource default deconstructor called" << std::endl);
 
   for (int i = 0; i < INVENTORY_SIZE; i++) {
     if (this->inventory[i])
@@ -31,7 +31,7 @@ MateriaSource::~MateriaSource() {
 }
 
 MateriaSource &MateriaSource::operator=(MateriaSource const &other) {
-  std::cout << "MateriaSource copy assignment operator called" << std::endl;
+  DEBUG_PRINT("MateriaSource copy assignment operator called" << std::endl);
 
   if (this != &other) {
     for (int i = 0; i < INVENTORY_SIZE; i++) {

@@ -1,20 +1,21 @@
 #include "Cure.hpp"
+#include "Debug.hpp"
 #include <iostream>
 
 const std::string Cure::CURE_MATERIA = "cure";
 
 Cure::Cure() : AMateria(CURE_MATERIA) {
-  std::cout << "Cure default constructor called" << std::endl;
+  DEBUG_PRINT("Cure default constructor called" << std::endl);
 }
 
 Cure::Cure(Cure const &other) : AMateria(other) {
-  std::cout << "Cure default copy constructor called" << std::endl;
+  DEBUG_PRINT("Cure default copy constructor called" << std::endl);
 }
 
-Cure::~Cure() { std::cout << "Cure default deconstructor called" << std::endl; }
+Cure::~Cure() { DEBUG_PRINT("Cure default deconstructor called" << std::endl); }
 
 Cure &Cure::operator=(Cure const &other) {
-  std::cout << "Cure copy assignment operator called" << std::endl;
+  DEBUG_PRINT("Cure copy assignment operator called" << std::endl);
   (void)other;
   return *this;
 }

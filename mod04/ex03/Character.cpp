@@ -1,29 +1,29 @@
 #include "Character.hpp"
-#include <iostream>
+#include "Debug.hpp"
 
 Character::Character() : ICharacter(), name("Character") {
-  std::cout << "Character default constructor called" << std::endl;
+  DEBUG_PRINT("Character default constructor called" << std::endl);
   for (int i = 0; i < INVENTORY_SIZE; i++) {
     this->inventory[i] = NULL;
   }
 }
 
 Character::Character(std::string const &name) : ICharacter(), name(name) {
-  std::cout << "Character name paramater constructor called" << std::endl;
+  DEBUG_PRINT("Character name paramater constructor called" << std::endl);
   for (int i = 0; i < INVENTORY_SIZE; i++) {
     this->inventory[i] = NULL;
   }
 }
 
 Character::~Character() {
-  std::cout << "Character default deconstructor called" << std::endl;
+  DEBUG_PRINT("Character default deconstructor called" << std::endl);
   for (int i = 0; i < INVENTORY_SIZE; i++) {
     delete this->inventory[i];
   }
 }
 
 Character::Character(const Character &other) : ICharacter() {
-  std::cout << "Character default copy constructor called" << std::endl;
+  DEBUG_PRINT("Character default copy constructor called" << std::endl);
 
   this->name = other.name;
   for (int i = 0; i < INVENTORY_SIZE; i++) {
@@ -38,7 +38,7 @@ Character::Character(const Character &other) : ICharacter() {
 }
 
 Character &Character::operator=(const Character &other) {
-  std::cout << "Character copy assignment operator called" << std::endl;
+  DEBUG_PRINT("Character copy assignment operator called" << std::endl);
 
   if (this != &other) {
     for (int i = 0; i < INVENTORY_SIZE; i++) {

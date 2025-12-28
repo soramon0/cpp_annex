@@ -1,24 +1,24 @@
 #include "AMateria.hpp"
-#include <iostream>
+#include "Debug.hpp"
 
 AMateria::AMateria() : type("AMateria") {
-  std::cout << "AMateria default constructor called" << std::endl;
+  DEBUG_PRINT("AMateria default constructor called" << std::endl);
 }
 
 AMateria::AMateria(std::string const &type) : type(type) {
-  std::cout << "AMateria type paramater constructor called" << std::endl;
+  DEBUG_PRINT("AMateria type paramater constructor called" << std::endl);
 }
 
 AMateria::AMateria(AMateria const &other) : type(other.type) {
-  std::cout << "AMateria default copy constructor called" << std::endl;
+  DEBUG_PRINT("AMateria default copy constructor called" << std::endl);
 }
 
 AMateria::~AMateria() {
-  std::cout << "AMateria default deconstructor called" << std::endl;
+  DEBUG_PRINT("AMateria default deconstructor called" << std::endl);
 }
 
 AMateria &AMateria::operator=(AMateria const &other) {
-  std::cout << "AMateria copy assignment operator called" << std::endl;
+  DEBUG_PRINT("AMateria copy assignment operator called" << std::endl);
   (void)other;
   return *this;
 }
