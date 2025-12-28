@@ -47,12 +47,40 @@ int main() {
     tmp = src->createMateria(Ice::ICE_MATERIA);
     me->equip(tmp);
 
+    Character *sam = new Character("sam");
     AMateria *dropped = tmp;
+    me->use(0, *sam);
     me->unequip(0);
 
     delete dropped;
     delete me;
+    delete sam;
     delete src;
+  }
+  {
+    std::cout << "--- Character deep copy test ---" << std::endl;
+    Character *alice = new Character("Alice");
+    alice->equip(new Ice());
+    ICharacter *sam = new Character(*alice);
+    delete alice;
+    sam->use(0, *sam);
+    delete sam;
+  }
+  {
+    std::cout << "--- Check maximum un/equipment test ---" << std::endl;
+    AMateria *cure = new Cure();
+    AMateria *ice = new Ice();
+    Character *me = new Character("me");
+    me->equip(cure->clone());
+    me->equip(cure->clone());
+    me->equip(cure);
+    me->equip(ice);
+    me->equip(ice);
+    me->unequip(2);
+    me->unequip(2);
+    me->unequip(6);
+    delete me;
+    delete cure;
   }
   return 0;
 }
