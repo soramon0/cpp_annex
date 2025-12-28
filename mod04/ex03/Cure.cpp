@@ -1,7 +1,9 @@
 #include "Cure.hpp"
 #include <iostream>
 
-Cure::Cure() : AMateria("cure") {
+const std::string Cure::CURE_MATERIA = "cure";
+
+Cure::Cure() : AMateria(CURE_MATERIA) {
   std::cout << "Cure default constructor called" << std::endl;
 }
 

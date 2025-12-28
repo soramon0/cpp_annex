@@ -1,7 +1,9 @@
 #include "Ice.hpp"
 #include <iostream>
 
-Ice::Ice() : AMateria("ice") {
+const std::string Ice::ICE_MATERIA = "ice";
+
+Ice::Ice() : AMateria(ICE_MATERIA) {
   std::cout << "Ice default constructor called" << std::endl;
 }
 

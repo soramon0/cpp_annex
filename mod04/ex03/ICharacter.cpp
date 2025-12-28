@@ -7,6 +7,7 @@ ICharacter::ICharacter() {
 
 ICharacter::ICharacter(ICharacter const &other) {
   std::cout << "ICharacter default copy constructor called" << std::endl;
+  (void)other;
 }
 
 ICharacter::~ICharacter() {

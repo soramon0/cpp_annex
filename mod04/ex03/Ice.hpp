@@ -3,11 +3,14 @@
 #include "ICharacter.hpp"
 
 class Ice : public AMateria {
+
 public:
   Ice();
   Ice(const Ice &other);
   virtual ~Ice();
   Ice &operator=(const Ice &other);
+
+  static const std::string ICE_MATERIA;
 
   virtual AMateria *clone() const;
   virtual void use(ICharacter &target);

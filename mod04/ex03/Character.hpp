@@ -5,7 +5,8 @@
 class Character : public ICharacter {
 protected:
   std::string name;
-  AMateria *inventory[4];
+  const static int INVENTORY_SIZE = 4;
+  AMateria *inventory[INVENTORY_SIZE];
 
 public:
   Character();

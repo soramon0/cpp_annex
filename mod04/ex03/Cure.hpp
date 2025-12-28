@@ -9,6 +9,8 @@ public:
   virtual ~Cure();
   Cure &operator=(const Cure &other);
 
+  static const std::string CURE_MATERIA;
+
   virtual AMateria *clone() const;
   virtual void use(ICharacter &target);
 };
