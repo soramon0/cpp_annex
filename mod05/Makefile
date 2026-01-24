@@ -1,10 +1,10 @@
 CXX      := g++
-NAME     := webserve
+NAME     := app
 ARGS     ?=
 
-BUILD_DIR := bin
 SRC_DIR   := src
 OBJ_DIR   := obj
+BUILD_DIR := build
 
 # Pre-processor
 CPPFLAGS := -I$(SRC_DIR) -MMD -MP
@@ -13,13 +13,15 @@ CXXFLAGS := -Wall -Wextra -Werror -std=c++98
 # Linker flags. Currently empty, but ready for use
 LDFLAGS  :=
 
-SRCS := $(shell find $(SRC_DIR) -name '*.cpp')
+SRCS := $(SRC_DIR)/main.cpp $(SRC_DIR)/Bureaucrat.cpp
 OBJS := $(SRCS:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 DEPS := $(OBJS:.o=.d)
 
 .PHONY: all clean fclean re run
 
-all: $(BUILD_DIR)/$(NAME)
+all: $(NAME)
+
+$(NAME): $(BUILD_DIR)/$(NAME)
 
 # Linking
 $(BUILD_DIR)/$(NAME): $(OBJS)
