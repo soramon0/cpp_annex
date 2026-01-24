@@ -22,7 +22,7 @@ DEPS := $(OBJS:.o=.d)
 all: $(BUILD_DIR)/$(NAME)
 
 # Linking
-$(BUILD_DIR)/$(TARGET): $(OBJS)
+$(BUILD_DIR)/$(NAME): $(OBJS)
 	@mkdir -p $(dir $@)
 	$(CXX) $(OBJS) -o $@ $(LDFLAGS)
 
