@@ -1,5 +1,5 @@
-CXX      := g++
-NAME     := app
+CXX      := c++
+NAME     := main
 ARGS     ?=
 CXXFLAGS := -Wall -Wextra -Werror -std=c++98
 
