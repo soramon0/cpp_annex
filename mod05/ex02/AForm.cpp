@@ -10,28 +10,20 @@ void AForm::checkGrade(u16 g) const {
 }
 
 AForm::AForm()
-    : name(""),
-      isSigned(false),
-      gradeToSign(GRADE_LOWEST),
-      gradeToExecute(GRADE_LOWEST),
-      target("") {}
+    : name(""), isSigned(false), gradeToSign(GRADE_LOWEST),
+      gradeToExecute(GRADE_LOWEST), target("") {}
 
 AForm::AForm(std::string const &name, u16 gradeToSign, u16 gradeToExecute,
              std::string const &target)
-    : name(name),
-      isSigned(false),
-      gradeToSign(gradeToSign),
-      gradeToExecute(gradeToExecute),
-      target(target) {
+    : name(name), isSigned(false), gradeToSign(gradeToSign),
+      gradeToExecute(gradeToExecute), target(target) {
   checkGrade(gradeToSign);
   checkGrade(gradeToExecute);
 }
 
 AForm::AForm(AForm const &other)
-    : name(other.name),
-      isSigned(other.isSigned),
-      gradeToSign(other.gradeToSign),
-      gradeToExecute(other.gradeToExecute),
+    : name(other.name), isSigned(other.isSigned),
+      gradeToSign(other.gradeToSign), gradeToExecute(other.gradeToExecute),
       target(other.target) {}
 
 AForm &AForm::operator=(AForm const &other) {
