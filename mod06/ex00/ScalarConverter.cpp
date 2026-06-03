@@ -6,28 +6,33 @@
 #include <iomanip>
 #include <iostream>
 
+static void printAllImpossible() {
+  std::cout << "char: impossible\n";
+  std::cout << "int: impossible\n";
+  std::cout << "float: impossible\n";
+  std::cout << "double: impossible" << std::endl;
+}
+
+static void printPseudo(const char *floatLine, const char *doubleLine) {
+  std::cout << "char: impossible\n";
+  std::cout << "int: impossible\n";
+  std::cout << "float: " << floatLine << "\n";
+  std::cout << "double: " << doubleLine << std::endl;
+}
+
 static void printSymbol(const Symbol::Kind symbol) {
   switch (symbol) {
   case Symbol::NAN:
   case Symbol::NANF:
-    std::cout << "char: impossible\n";
-    std::cout << "int: impossible\n";
-    std::cout << "float: nanf\n";
-    std::cout << "double: nan" << std::endl;
+    printPseudo("nanf", "nan");
     break;
   case Symbol::INF_PLUS:
   case Symbol::INFF_PLUS:
-    std::cout << "char: impossible\n";
-    std::cout << "int: impossible\n";
-    std::cout << "float: +inff\n";
-    std::cout << "double: +inf" << std::endl;
+    printPseudo("+inff", "+inf");
     break;
   case Symbol::INF_MINUS:
   case Symbol::INFF_MINUS:
-    std::cout << "char: impossible\n";
-    std::cout << "int: impossible\n";
-    std::cout << "float: -inff\n";
-    std::cout << "double: -inf" << std::endl;
+    printPseudo("-inff", "-inf");
     break;
   default:
     std::cerr << "should never get here." << std::endl;
@@ -74,16 +79,13 @@ static bool isIntLiteral(const std::string &s) {
   size_t i = 0;
   if (s[i] == '+' || s[i] == '-')
     i++;
-
   if (i >= s.size())
     return false;
 
-  while (i < s.size()) {
+  for (; i < s.size(); i++) {
     if (!std::isdigit(s[i]))
       return false;
-    i++;
   }
-
   return true;
 }
 
@@ -101,11 +103,15 @@ static bool isDoubleLiteral(const std::string &s) {
   return isFloatingBody(s);
 }
 
+static bool consumedAll(const char *start, char *end) {
+  return end != start && *end == '\0';
+}
+
 static bool parseInt(const std::string &s, int &out) {
   char *end = NULL;
   errno = 0;
   long v = std::strtol(s.c_str(), &end, 10);
-  if (errno == ERANGE || end == s.c_str() || *end != '\0')
+  if (errno == ERANGE || !consumedAll(s.c_str(), end))
     return false;
   if (v < INT_MIN || v > INT_MAX)
     return false;
@@ -118,7 +124,7 @@ static bool parseFloat(const std::string &s, float &out) {
   char *end = NULL;
   errno = 0;
   float v = std::strtof(num.c_str(), &end);
-  if (errno == ERANGE || end == num.c_str() || *end != '\0')
+  if (errno == ERANGE || !consumedAll(num.c_str(), end))
     return false;
   out = v;
   return true;
@@ -128,7 +134,7 @@ static bool parseDouble(const std::string &s, double &out) {
   char *end = NULL;
   errno = 0;
   double v = std::strtod(s.c_str(), &end);
-  if (errno == ERANGE || end == s.c_str() || *end != '\0')
+  if (errno == ERANGE || !consumedAll(s.c_str(), end))
     return false;
   out = v;
   return true;
@@ -138,17 +144,18 @@ static bool isWholeNumber(double value) {
   return value == static_cast<int>(value);
 }
 
-static void printCharLine(double value) {
-  if (value < 0.0 || value > 127.0 || !isWholeNumber(value)) {
+static void printCharLine(char c) {
+  unsigned char uc = static_cast<unsigned char>(c);
+
+  if (uc > 127) {
     std::cout << "char: impossible\n";
     return;
   }
-  int i = static_cast<int>(value);
-  if (!std::isprint(i)) {
+  if (!std::isprint(uc)) {
     std::cout << "char: Non displayable\n";
     return;
   }
-  std::cout << "char: '" << static_cast<char>(i) << "'\n";
+  std::cout << "char: '" << c << "'\n";
 }
 
 static void printIntLine(double value) {
@@ -177,33 +184,8 @@ static void printDoubleLine(double value) {
     std::cout << value << std::endl;
 }
 
-static void printFromInt(int i) {
-  float f = static_cast<float>(i);
-  double d = static_cast<double>(i);
-
-  printCharLine(static_cast<double>(static_cast<char>(i)));
-  std::cout << "int: " << i << "\n";
-  printFloatLine(f);
-  printDoubleLine(d);
-}
-
-static void printFromFloat(float f) {
-  char c = static_cast<char>(f);
-  int i = static_cast<int>(f);
-  double d = static_cast<double>(f);
-
-  printCharLine(static_cast<double>(c));
-  printIntLine(static_cast<double>(i));
-  printFloatLine(f);
-  printDoubleLine(d);
-}
-
-static void printFromDouble(double d) {
-  char c = static_cast<char>(d);
-  int i = static_cast<int>(d);
-  float f = static_cast<float>(d);
-
-  printCharLine(static_cast<double>(c));
+static void printScalars(char c, int i, float f, double d) {
+  printCharLine(c);
   printIntLine(static_cast<double>(i));
   printFloatLine(f);
   printDoubleLine(d);
@@ -220,27 +202,27 @@ void ScalarConverter::convert(const std::string &val) {
   if (isFloatLiteral(val)) {
     float f = 0.0f;
     if (parseFloat(val, f)) {
-      printFromFloat(f);
+      printScalars(static_cast<char>(f), static_cast<int>(f), f,
+                   static_cast<double>(f));
       return;
     }
   } else if (isDoubleLiteral(val)) {
     double d = 0.0;
     if (parseDouble(val, d)) {
-      printFromDouble(d);
+      printScalars(static_cast<char>(d), static_cast<int>(d),
+                   static_cast<float>(d), d);
       return;
     }
   } else if (isIntLiteral(val)) {
     int i = 0;
     if (parseInt(val, i)) {
-      printFromInt(i);
+      printScalars(static_cast<char>(i), i, static_cast<float>(i),
+                   static_cast<double>(i));
       return;
     }
   }
 
-  std::cout << "char: impossible\n";
-  std::cout << "int: impossible\n";
-  std::cout << "float: impossible\n";
-  std::cout << "double: impossible" << std::endl;
+  printAllImpossible();
 }
 
 Symbol::Kind Symbol::getSymbol(const std::string &v) {
