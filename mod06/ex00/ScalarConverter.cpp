@@ -20,23 +20,20 @@ static void printPseudo(const char *floatLine, const char *doubleLine) {
   std::cout << "double: " << doubleLine << std::endl;
 }
 
-static void printSymbol(const Symbol::Kind symbol) {
-  switch (symbol) {
-  case Symbol::NAN:
-  case Symbol::NANF:
+static bool tryPrintPseudo(const std::string &v) {
+  if (v == "nan" || v == "nanf") {
     printPseudo("nanf", "nan");
-    break;
-  case Symbol::INF_PLUS:
-  case Symbol::INFF_PLUS:
-    printPseudo("+inff", "+inf");
-    break;
-  case Symbol::INF_MINUS:
-  case Symbol::INFF_MINUS:
-    printPseudo("-inff", "-inf");
-    break;
-  default:
-    std::cerr << "should never get here." << std::endl;
+    return true;
   }
+  if (v == "+inf" || v == "+inff") {
+    printPseudo("+inff", "+inf");
+    return true;
+  }
+  if (v == "-inf" || v == "-inff") {
+    printPseudo("-inff", "-inf");
+    return true;
+  }
+  return false;
 }
 
 static bool isFloatingBody(const std::string &s) {
@@ -167,21 +164,26 @@ static void printIntLine(double value) {
   std::cout << "int: " << static_cast<int>(value) << "\n";
 }
 
-static void printFloatLine(float value) {
-  std::cout << "float: ";
-  if (isWholeNumber(static_cast<double>(value)))
-    std::cout << std::fixed << std::setprecision(1) << value << "f\n";
+static void printDecimalLine(const char *label, double value, const char *suffix,
+                             bool endl) {
+  std::cout << label;
+  if (isWholeNumber(value))
+    std::cout << std::fixed << std::setprecision(1) << value;
   else
-    std::cout << value << "f\n";
+    std::cout << value;
+  if (endl)
+    std::cout << std::endl;
+  else
+    std::cout << suffix << '\n';
   std::cout.unsetf(std::ios_base::floatfield);
 }
 
+static void printFloatLine(float value) {
+  printDecimalLine("float: ", static_cast<double>(value), "f", false);
+}
+
 static void printDoubleLine(double value) {
-  std::cout << "double: ";
-  if (isWholeNumber(value))
-    std::cout << std::fixed << std::setprecision(1) << value << std::endl;
-  else
-    std::cout << value << std::endl;
+  printDecimalLine("double: ", value, "", true);
 }
 
 static void printScalars(char c, int i, float f, double d) {
@@ -192,12 +194,8 @@ static void printScalars(char c, int i, float f, double d) {
 }
 
 void ScalarConverter::convert(const std::string &val) {
-  Symbol::Kind symbol = Symbol::getSymbol(val);
-
-  if (symbol != Symbol::UNKNWON) {
-    printSymbol(symbol);
+  if (tryPrintPseudo(val))
     return;
-  }
 
   if (isFloatLiteral(val)) {
     float f = 0.0f;
@@ -223,22 +221,6 @@ void ScalarConverter::convert(const std::string &val) {
   }
 
   printAllImpossible();
-}
-
-Symbol::Kind Symbol::getSymbol(const std::string &v) {
-  if (v == "nan")
-    return Symbol::NAN;
-  if (v == "nanf")
-    return Symbol::NANF;
-  if (v == "+inf")
-    return Symbol::INF_PLUS;
-  if (v == "-inf")
-    return Symbol::INF_MINUS;
-  if (v == "+inff")
-    return Symbol::INFF_PLUS;
-  if (v == "-inff")
-    return Symbol::INFF_MINUS;
-  return Symbol::UNKNWON;
 }
 
 ScalarConverter::ScalarConverter() {}
