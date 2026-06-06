@@ -137,60 +137,31 @@ static bool parseDouble(const std::string &s, double &out) {
   return true;
 }
 
-static bool isWholeNumber(double value) {
-  return value == static_cast<int>(value);
-}
-
-static void printCharLine(char c) {
-  unsigned char uc = static_cast<unsigned char>(c);
-
-  if (uc > 127) {
-    std::cout << "char: impossible\n";
-    return;
-  }
-  if (!std::isprint(uc)) {
-    std::cout << "char: Non displayable\n";
-    return;
-  }
-  std::cout << "char: '" << c << "'\n";
-}
-
-static void printIntLine(double value) {
-  if (value < static_cast<double>(INT_MIN) ||
-      value > static_cast<double>(INT_MAX) || !isWholeNumber(value)) {
-    std::cout << "int: impossible\n";
-    return;
-  }
-  std::cout << "int: " << static_cast<int>(value) << "\n";
-}
-
-static void printDecimalLine(const char *label, double value, const char *suffix,
-                             bool endl) {
+static void printDecimal(const char *label, double value, const char *suffix) {
   std::cout << label;
-  if (isWholeNumber(value))
+  if (value == static_cast<int>(value))
     std::cout << std::fixed << std::setprecision(1) << value;
   else
     std::cout << value;
-  if (endl)
-    std::cout << std::endl;
-  else
-    std::cout << suffix << '\n';
+
+  std::cout << suffix;
   std::cout.unsetf(std::ios_base::floatfield);
 }
 
-static void printFloatLine(float value) {
-  printDecimalLine("float: ", static_cast<double>(value), "f", false);
-}
-
-static void printDoubleLine(double value) {
-  printDecimalLine("double: ", value, "", true);
-}
-
 static void printScalars(char c, int i, float f, double d) {
-  printCharLine(c);
-  printIntLine(static_cast<double>(i));
-  printFloatLine(f);
-  printDoubleLine(d);
+  unsigned char uc = static_cast<unsigned char>(c);
+
+  if (uc > 127)
+    std::cout << "char: impossible\n";
+  else if (!std::isprint(uc))
+    std::cout << "char: Non displayable\n";
+  else
+    std::cout << "char: '" << c << "'\n";
+
+  std::cout << "int: " << i << "\n";
+  printDecimal("float: ", static_cast<double>(f), "f\n");
+  printDecimal("double: ", d, "");
+  std::cout << std::endl;
 }
 
 void ScalarConverter::convert(const std::string &val) {
