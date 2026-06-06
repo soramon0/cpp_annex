@@ -48,6 +48,17 @@ bool Parser::isFloatingBody(const std::string &s) {
   return hasDigit;
 }
 
+bool Parser::isChar(const std::string &s) {
+  return s.size() == 3 && s[0] == '\'' && s[2] == '\'';
+}
+
+bool Parser::parseChar(const std::string &s, char &out) {
+  if (!isChar(s))
+    return false;
+  out = s[1];
+  return true;
+}
+
 bool Parser::isInt(const std::string &s) {
   if (s.empty())
     return false;

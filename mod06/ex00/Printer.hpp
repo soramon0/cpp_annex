@@ -5,7 +5,7 @@
 class Printer {
 public:
   static bool tryPrintPseudo(const std::string &v);
-  static void printScalars(char c, int i, float f, double d);
+  static void printScalars(char c, double intSource, float f, double d);
   static void printAllImpossible();
 
 private:

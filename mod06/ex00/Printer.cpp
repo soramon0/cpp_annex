@@ -1,4 +1,5 @@
 #include "Printer.hpp"
+#include <climits>
 #include <cctype>
 #include <iomanip>
 #include <iostream>
@@ -52,7 +53,7 @@ void Printer::printDecimal(const char *label, double value,
   std::cout.unsetf(std::ios_base::floatfield);
 }
 
-void Printer::printScalars(char c, int i, float f, double d) {
+void Printer::printScalars(char c, double intSource, float f, double d) {
   unsigned char uc = static_cast<unsigned char>(c);
 
   if (uc > 127)
@@ -62,7 +63,11 @@ void Printer::printScalars(char c, int i, float f, double d) {
   else
     std::cout << "char: '" << c << "'\n";
 
-  std::cout << "int: " << i << "\n";
+  if (intSource < static_cast<double>(INT_MIN) ||
+      intSource > static_cast<double>(INT_MAX))
+    std::cout << "int: impossible\n";
+  else
+    std::cout << "int: " << static_cast<int>(intSource) << "\n";
   printDecimal("float: ", static_cast<double>(f), "f\n");
   printDecimal("double: ", d, "");
   std::cout << std::endl;
