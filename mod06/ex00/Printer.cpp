@@ -1,0 +1,73 @@
+#include "Printer.hpp"
+#include <cctype>
+#include <iomanip>
+#include <iostream>
+
+Printer::Printer() {}
+
+Printer::Printer(const Printer &other) { (void)other; }
+
+Printer &Printer::operator=(const Printer &other) {
+  (void)other;
+  return *this;
+}
+
+Printer::~Printer() {}
+
+void Printer::printAllImpossible() {
+  std::cout << "char: impossible\n";
+  std::cout << "int: impossible\n";
+  std::cout << "float: impossible\n";
+  std::cout << "double: impossible" << std::endl;
+}
+
+void Printer::printPseudo(const char *floatLine, const char *doubleLine) {
+  std::cout << "char: impossible\n";
+  std::cout << "int: impossible\n";
+  std::cout << "float: " << floatLine << "\n";
+  std::cout << "double: " << doubleLine << std::endl;
+}
+
+bool Printer::tryPrintPseudo(const std::string &v) {
+  if (v == "nan" || v == "nanf") {
+    printPseudo("nanf", "nan");
+    return true;
+  }
+  if (v == "+inf" || v == "+inff") {
+    printPseudo("+inff", "+inf");
+    return true;
+  }
+  if (v == "-inf" || v == "-inff") {
+    printPseudo("-inff", "-inf");
+    return true;
+  }
+  return false;
+}
+
+void Printer::printDecimal(const char *label, double value,
+                           const char *suffix) {
+  std::cout << label;
+  if (value == static_cast<int>(value))
+    std::cout << std::fixed << std::setprecision(1) << value;
+  else
+    std::cout << value;
+
+  std::cout << suffix;
+  std::cout.unsetf(std::ios_base::floatfield);
+}
+
+void Printer::printScalars(char c, int i, float f, double d) {
+  unsigned char uc = static_cast<unsigned char>(c);
+
+  if (uc > 127)
+    std::cout << "char: impossible\n";
+  else if (!std::isprint(uc))
+    std::cout << "char: Non displayable\n";
+  else
+    std::cout << "char: '" << c << "'\n";
+
+  std::cout << "int: " << i << "\n";
+  printDecimal("float: ", static_cast<double>(f), "f\n");
+  printDecimal("double: ", d, "");
+  std::cout << std::endl;
+}

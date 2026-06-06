@@ -1,7 +1,7 @@
 CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 TARGET = convert
-SRC = main.cpp ScalarConverter.cpp
+SRC = main.cpp ScalarConverter.cpp Parser.cpp Printer.cpp
 OBJ = $(SRC:.cpp=.o)
 
 all: $(TARGET)
