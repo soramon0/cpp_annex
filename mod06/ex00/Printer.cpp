@@ -47,11 +47,7 @@ bool Printer::tryPrintPseudo(const std::string &v) {
 void Printer::printDecimal(const char *label, double value,
                            const char *suffix) {
   std::cout << label;
-  if (value == static_cast<int>(value))
-    std::cout << std::fixed << std::setprecision(1) << value;
-  else
-    std::cout << value;
-
+  std::cout << std::fixed << std::setprecision(1) << value;
   std::cout << suffix;
   std::cout.unsetf(std::ios_base::floatfield);
 }
